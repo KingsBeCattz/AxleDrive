@@ -23,6 +23,8 @@ constexpr InputMode DEFAULT_INPUT_MODE = InputMode::TRIGGER_STICK_RIGHT;
 constexpr InputMode DEFAULT_INPUT_MODE = InputMode::DUAL_STICK_RIGHT;
 #endif
 
+extern InputMode input_mode;
+
 inline MotorDriver::SignedPWM trigger_power_right()
 {
   return (gamepad.held(Button::RB) ? 255 : gamepad.rightTrigger()) - (gamepad.held(Button::LB) ? 255 : gamepad.leftTrigger());
