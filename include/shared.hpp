@@ -4,6 +4,8 @@
 #include "debug.hpp"
 #include "input.hpp"
 
+extern inline float steer_wrapper();
+
 constexpr MotorDriver::UnsignedPWM DEFAULT_DEADZONE = 25;
 
 struct HBridgeConfig
