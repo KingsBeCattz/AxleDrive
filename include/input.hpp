@@ -96,19 +96,48 @@ inline void set_input_mode(MotorDriver::DiffDrive &driver, InputMode mode)
   }
 }
 
-inline void change_input_mode(MotorDriver::DiffDrive &driver, InputMode &current_mode)
+inline void handleInputModeSwitch(BSPGamepad &gamepad)
 {
-  auto previous_mode = current_mode;
+  if (gamepad.getState().buttons.raw() & Button::DPAD_MASK)
+  {
+    if (gamepad.pressed(Button::Up))
+      input_mode = InputMode::TRIGGER_STICK_RIGHT;
+    else if (gamepad.pressed(Button::Down))
+      input_mode = InputMode::TRIGGER_STICK_LEFT;
+    else if (gamepad.pressed(Button::Right))
+      input_mode = InputMode::DUAL_STICK_RIGHT;
+    else if (gamepad.pressed(Button::Left))
+      input_mode = InputMode::DUAL_STICK_LEFT;
 
-  if (gamepad.pressed(Button::Up))
-    current_mode = InputMode::TRIGGER_STICK_RIGHT;
-  else if (gamepad.pressed(Button::Down))
-    current_mode = InputMode::TRIGGER_STICK_LEFT;
-  else if (gamepad.pressed(Button::Right))
-    current_mode = InputMode::DUAL_STICK_RIGHT;
-  else if (gamepad.pressed(Button::Left))
-    current_mode = InputMode::DUAL_STICK_LEFT;
+    set_input_mode(motor_driver, input_mode);
+#if DUAL == 1
+    set_input_mode(second_driver, input_mode);
+#endif
+  }
+}
 
-  if (current_mode != previous_mode)
-    set_input_mode(driver, current_mode);
+inline void handlePivotInput(BSPGamepad &gamepad)
+{
+  auto current_pivot = motor_driver.getPivotMode();
+
+  if (gamepad.held(Button::X))
+  {
+    if (current_pivot == MotorDriver::PivotMode::Center)
+      return;
+
+    motor_driver.setPivotMode(MotorDriver::PivotMode::Center);
+#if DUAL == 1
+    second_driver.setPivotMode(MotorDriver::PivotMode::Center);
+#endif
+  }
+  else
+  {
+    if (current_pivot == MotorDriver::PivotMode::Wheel)
+      return;
+
+    motor_driver.setPivotMode(MotorDriver::PivotMode::Wheel);
+#if DUAL == 1
+    second_driver.setPivotMode(MotorDriver::PivotMode::Wheel);
+#endif
+  }
 }
