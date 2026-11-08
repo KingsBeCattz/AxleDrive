@@ -3,9 +3,7 @@
 #include "GamepadState.hpp"
 #include "debug.hpp"
 #include "bsp.hpp"
-
-ControllerPtr BSPGamepad::_controller = nullptr;
-BSPGamepad *BSPGamepad::_instance = nullptr;
+#include "DiffDrive.hpp"
 
 InputMode input_mode = DEFAULT_INPUT_MODE;
 BSPGamepad gamepad;
