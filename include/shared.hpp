@@ -46,6 +46,7 @@ inline void configureMotorDriver(const char *name, MotorDriver::DiffDrive &motor
     motor_driver.attachEnablePin(config.standby);
   }
 
+  motor_driver.attachSteeringFunction(steer_wrapper);
   set_input_mode(motor_driver, input_mode);
   leftMotor.setDeadzoneThreshold(deadzone);
   rightMotor.setDeadzoneThreshold(deadzone);
