@@ -40,45 +40,9 @@ void loop()
     return;
   }
 
-  if (gamepad.getState().buttons.raw() & Button::DPAD_MASK)
-  {
-    if (gamepad.pressed(Button::Up))
-      input_mode = InputMode::TRIGGER_STICK_RIGHT;
-    else if (gamepad.pressed(Button::Down))
-      input_mode = InputMode::TRIGGER_STICK_LEFT;
-    else if (gamepad.pressed(Button::Right))
-      input_mode = InputMode::DUAL_STICK_RIGHT;
-    else if (gamepad.pressed(Button::Left))
-      input_mode = InputMode::DUAL_STICK_LEFT;
+  handleInputModeSwitch(gamepad);
 
-    set_input_mode(motor_driver, input_mode);
-#if DUAL == 1
-    set_input_mode(second_driver, input_mode);
-#endif
-
-    auto current_pivot = motor_driver.getPivotMode();
-
-    if (gamepad.held(Button::X))
-    {
-      if (current_pivot == MotorDriver::PivotMode::Center)
-        return;
-
-      motor_driver.setPivotMode(MotorDriver::PivotMode::Center);
-#if DUAL == 1
-      second_driver.setPivotMode(MotorDriver::PivotMode::Center);
-#endif
-    }
-    else
-    {
-      if (current_pivot == MotorDriver::PivotMode::Wheel)
-        return;
-
-      motor_driver.setPivotMode(MotorDriver::PivotMode::Wheel);
-#if DUAL == 1
-      second_driver.setPivotMode(MotorDriver::PivotMode::Wheel);
-#endif
-    }
-  }
+  handlePivotInput(gamepad);
 
   BSP::loop();
 
