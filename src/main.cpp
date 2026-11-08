@@ -29,6 +29,10 @@ void loop()
   if (!gamepad.isConnected())
   {
     BSP::LED::set(true);
+    delay(65);
+    BSP::LED::set(false);
+    delay(65);
+    BSP::LED::set(true);
     delay(130);
     BSP::LED::set(false);
     delay(130);
