@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include "debug/motors.hpp"
+#include "debug/gamepad.hpp"
 
 namespace DebugTools
 {
