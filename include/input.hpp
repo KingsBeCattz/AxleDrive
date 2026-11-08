@@ -4,6 +4,10 @@
 #include <gamepad.hpp>
 
 extern BSPGamepad gamepad;
+extern MotorDriver::DiffDrive motor_driver;
+#if DUAL == 1
+extern MotorDriver::DiffDrive second_driver;
+#endif
 
 enum class InputMode : uint8_t
 {
