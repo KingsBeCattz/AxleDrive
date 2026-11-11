@@ -45,11 +45,13 @@ namespace DebugTools
     Serial.println();
   }
 
-  inline void snitchDiffDrive(const MotorDriver::DiffDrive &driver, const char *name)
+  inline void snitchDiffDrive(const MotorDriver::DiffDrive &driver, const char *name, const char *model)
   {
     Serial.print("DiffDrive ");
     Serial.print(name);
-    Serial.println(":");
+    Serial.print(" (");
+    Serial.print(model);
+    Serial.println("):");
 
     auto stbyPin = driver.getEnablePin();
     if (stbyPin != MotorDriver::PIN_UNUSED)
