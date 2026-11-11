@@ -53,5 +53,5 @@ inline void configureMotorDriver(const char *name, MotorDriver::DiffDrive &motor
 
   motor_driver.begin();
 
-  DebugTools::snitchDiffDrive(motor_driver, name);
+  DebugTools::snitchDiffDrive(motor_driver, name, config.name);
 }
